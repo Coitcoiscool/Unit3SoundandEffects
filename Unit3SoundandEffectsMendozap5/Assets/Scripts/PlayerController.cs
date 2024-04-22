@@ -17,6 +17,10 @@ public class PlayerController : MonoBehaviour
     public AudioClip jumpSound;
     public AudioClip crashSound;
     private AudioSource playerAudio;
+    public bool isDoubleJump;
+    public float dash = 2;
+    public bool osDAshing = false;
+    private float animSpeed;
     // Start is called before the first frame update
     void Start()
     {
@@ -36,8 +40,14 @@ public class PlayerController : MonoBehaviour
             playerAnim.SetTrigger("Jump_trig");
             dirtParticle.Stop();
             playerAudio.PlayOneShot(jumpSound,1.0f);
-        }  
-      
+        }
+        else if (Input.GetKeyDown(KeyCode.Space) && !isOnGround && !isDoubleJump && !gameOver)
+        {
+            playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            playerAudio.PlayOneShot(jumpSound, 0.5f);
+            isDoubleJump = true;
+        }
+       
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -55,5 +65,6 @@ public class PlayerController : MonoBehaviour
             dirtParticle.Stop();
             playerAudio.PlayOneShot(crashSound, 1.0f);
         }
+
     }
 }
