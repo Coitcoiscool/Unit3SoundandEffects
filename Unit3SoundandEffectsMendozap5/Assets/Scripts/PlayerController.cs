@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
     private AudioSource playerAudio;
     public bool isDoubleJump;
     public float dash = 2;
-    public bool osDAshing = false;
+    public bool isDashing = false;
     private float animSpeed;
     // Start is called before the first frame update
     void Start()
@@ -47,7 +47,13 @@ public class PlayerController : MonoBehaviour
             playerAudio.PlayOneShot(jumpSound, 0.5f);
             isDoubleJump = true;
         }
-       
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            animSpeed = playerAnim.GetFloat("Speed_f") * dash;
+            playerAnim.SetFloat("Speed_f", animSpeed / dash);
+            isDashing = false;
+
+        }
     }
     private void OnCollisionEnter(Collision collision)
     {

@@ -11,8 +11,8 @@ public class MoveLeft : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
-            
+        playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
+
     }
 
     // Update is called once per frame
@@ -23,9 +23,20 @@ public class MoveLeft : MonoBehaviour
             transform.Translate(Vector3.left * Time.deltaTime * speed);
 
 
-            if (transform.position.x<leftBound && gameObject.CompareTag("Obstacle"))
+            if (transform.position.x < leftBound && gameObject.CompareTag("Obstacle"))
             {
                 Destroy(gameObject);
+            }
+        }
+        if (playerControllerScript.gameOver == false)
+        {
+            if (playerControllerScript.isDashing == true)
+            {
+                transform.Translate(Vector3.left * speed * Time.deltaTime * playerControllerScript.dash);
+            }
+            else
+            {
+                transform.Translate(Vector3.left * speed * Time.deltaTime);
             }
         }
     }
